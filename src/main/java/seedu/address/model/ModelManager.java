@@ -252,6 +252,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasStudent(StudentId studentId) {
+        return tAssist.hasStudent(studentId);
+    }
+
+    @Override
     public void removeStudentFromAssessments(Student student) {
         tAssist.removeStudentFromAssessments(student);
     }

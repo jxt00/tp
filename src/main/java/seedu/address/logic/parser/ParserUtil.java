@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ALL_STUDENTS;
 import static seedu.address.logic.parser.CliSyntax.TYPE_ASSESSMENT;
 import static seedu.address.logic.parser.CliSyntax.TYPE_CLASS;
@@ -46,7 +47,12 @@ import seedu.address.model.tamodule.TaModule;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_STUDENT_INVALID = "Student argument is invalid!";
+    public static final String MESSAGE_STUDENT_INVALID = "Student argument is invalid.";
+    public static final String MESSAGE_STUDENT_ARG_INVALID = "Student argument '%s' is invalid.";
+    public static final String MESSAGE_STUDENT_EMPTY = "Student argument cannot be empty.";
+    public static final String MESSAGE_STUDENT_ARG_NOT_FOUND = "Student with ID '%s' does not exist in the list.";
+    public static final String MESSAGE_STUDENT_NOT_FOUND = "Student does not exist in the list.";
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -254,7 +260,7 @@ public class ParserUtil {
             ClassGroupType type = ClassGroupType.valueOf(trimmedUpperCaseType);
             return type;
         } catch (IllegalArgumentException e) {
-            throw new ParseException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+            throw new ParseException(ClassGroupType.MESSAGE_CONSTRAINTS);
         }
     }
 
@@ -377,55 +383,95 @@ public class ParserUtil {
 
     //@@author jxt00
     /**
-     * Parses a {@code String s} into an {@code ObservableList<Student>}.
-     * No mix of student IDs and indexes is allowed.
+     * Parses a {@code String args} into an {@code ObservableList<Student>}.
+     * Determines if the {@code args} should be parsed as student IDs or indexes.
      *
-     * @throws ParseException if the student IDs or indexes are invalid.
+     * @throws ParseException if {@code args} is empty or invalid.
      */
-    public static ObservableList<Student> parseStudents(String s, Model model) throws ParseException {
-        if (s.equals(PARAM_ALL_STUDENTS)) {
+    public static ObservableList<Student> parseStudents(String args, Model model) throws ParseException {
+        if (args.equals(PARAM_ALL_STUDENTS)) {
             return model.getUnfilteredStudentList();
         }
 
-        String[] splitS = s.toUpperCase().split(",");
-        if (splitS[0].isEmpty()) {
+        if (args.length() == 0) {
+            throw new ParseException(MESSAGE_STUDENT_EMPTY);
+        }
+
+        String[] splitArgs = args.toUpperCase().split(",");
+        if (splitArgs.length == 0
+                || (!StudentId.isValidStudentId(splitArgs[0])
+                && !StringUtil.isNonZeroUnsignedInteger(splitArgs[0].trim())
+                && !splitArgs[0].trim().startsWith("E"))) {
             throw new ParseException(MESSAGE_STUDENT_INVALID);
         }
-        switch(splitS[0].charAt(0)) {
-        case 'E':
-            List<StudentId> studentIds = new ArrayList<>();
-            for (String i : splitS) {
-                try {
-                    StudentId sid = parseStudentId(i);
-                    if (!studentIds.contains(sid)) {
-                        studentIds.add(sid);
-                    }
-                } catch (ParseException pe) {
-                    throw new ParseException(MESSAGE_STUDENT_INVALID, pe);
-                }
-            }
+
+        if (splitArgs[0].charAt(0) == 'E') {
+            return parseStudentIds(splitArgs, model);
+        } else {
+            return parseStudentIndexes(splitArgs, model);
+        }
+    }
+
+    //@@author jxt00
+    /**
+     * Parses a {@code String[] splitIds} into an {@code ObservableList<Student>}.
+     * No mix of student IDs and indexes is allowed.
+     *
+     * @throws ParseException if the student IDs are invalid.
+     */
+    private static ObservableList<Student> parseStudentIds(String[] splitIds, Model model) throws ParseException {
+        List<StudentId> studentIds = new ArrayList<>();
+        for (String i : splitIds) {
+            StudentId sid;
             try {
-                return model.getStudentListByStudentIds(studentIds);
-            } catch (StudentNotFoundException e) {
-                throw new ParseException(MESSAGE_STUDENT_INVALID);
+                sid = parseStudentId(i);
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_STUDENT_ARG_INVALID, i), pe);
             }
-        default:
-            List<Index> studentIndexes = new ArrayList<>();
-            for (String i : splitS) {
-                try {
-                    Index index = parseIndex(i);
-                    if (!studentIndexes.contains(index)) {
-                        studentIndexes.add(index);
-                    }
-                } catch (ParseException pe) {
-                    throw new ParseException(MESSAGE_STUDENT_INVALID, pe);
-                }
+            if (!model.hasStudent(sid)) {
+                throw new ParseException(String.format(MESSAGE_STUDENT_ARG_NOT_FOUND, sid));
             }
+            // check for duplicates
+            if (!studentIds.contains(sid)) {
+                studentIds.add(sid);
+            }
+        }
+        try {
+            return model.getStudentListByStudentIds(studentIds);
+        } catch (StudentNotFoundException e) {
+            throw new ParseException(MESSAGE_STUDENT_NOT_FOUND);
+        }
+    }
+
+    //@@author jxt00
+    /**
+     * Parses a {@code String[] splitIndexes} into an {@code ObservableList<Student>}.
+     * No mix of student IDs and indexes is allowed.
+     *
+     * @throws ParseException if the student indexes are invalid.
+     */
+    private static ObservableList<Student> parseStudentIndexes(String[] splitIndexes, Model model)
+            throws ParseException {
+        List<Index> studentIndexes = new ArrayList<>();
+        for (String i : splitIndexes) {
+            Index index;
             try {
-                return model.getStudentListByIndexes(studentIndexes);
-            } catch (StudentNotFoundException e) {
-                throw new ParseException(MESSAGE_STUDENT_INVALID);
+                index = parseIndex(i);
+            } catch (ParseException pe) {
+                throw new ParseException(MESSAGE_INVALID_INDEX, pe);
             }
+            if (!checkValidIndex(index, model.getUnfilteredStudentList().size())) {
+                throw new ParseException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+            }
+            // check for duplicates
+            if (!studentIndexes.contains(index)) {
+                studentIndexes.add(index);
+            }
+        }
+        try {
+            return model.getStudentListByIndexes(studentIndexes);
+        } catch (StudentNotFoundException e) {
+            throw new ParseException(MESSAGE_STUDENT_NOT_FOUND);
         }
     }
 }

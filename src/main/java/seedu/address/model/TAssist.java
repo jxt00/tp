@@ -114,6 +114,14 @@ public class TAssist implements ReadOnlyTAssist {
     }
 
     /**
+     * Returns true if a student with the same StudentId exists in the TAssist.
+     */
+    public boolean hasStudent(StudentId studentId) {
+        requireNonNull(studentId);
+        return students.contains(studentId);
+    }
+
+    /**
      * Adds a student to the TAssist.
      * The student must not already exist in the TAssist.
      */

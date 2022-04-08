@@ -1,8 +1,9 @@
 package seedu.address.model.classgroup;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
@@ -10,6 +11,7 @@ import seedu.address.model.entity.Entity;
 import seedu.address.model.entity.EntityType;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.WeekId;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.tamodule.TaModule;
@@ -21,7 +23,7 @@ import seedu.address.model.tamodule.TaModule;
  */
 public class ClassGroup implements Entity {
     // Identity fields
-    private static final int NUM_OF_WEEKS = 13;
+    public static final int NUM_OF_WEEKS = 13;
     private final ClassGroupId classGroupId;
     private final ClassGroupType classGroupType;
     private final TaModule taModule;
@@ -58,18 +60,16 @@ public class ClassGroup implements Entity {
         this.uniqueStudentList = uniqueStudentList;
 
         // initialize the 13 lessons
-        Lesson[] arr = new Lesson[NUM_OF_WEEKS];
-        for (int i = 0; i < NUM_OF_WEEKS; i++) {
-            arr[i] = new Lesson(new WeekId(Integer.toString(i + 1)));
-        }
-        this.lessons = Arrays.asList(arr);
+        this.lessons = IntStream.rangeClosed(1, NUM_OF_WEEKS)
+                .mapToObj(entry -> new Lesson(new WeekId(String.valueOf(entry))))
+                .collect(Collectors.toList());
     }
 
     /**
      * Construct a {@code ClassGroup} by copying all the provided fields.
      */
     public ClassGroup(ClassGroupId classGroupId, ClassGroupType classGroupType, TaModule taModule,
-                       UniqueStudentList uniqueStudentList, List<Lesson> lessons) {
+                      UniqueStudentList uniqueStudentList, List<Lesson> lessons) {
         this.classGroupId = classGroupId;
         this.classGroupType = classGroupType;
         this.taModule = taModule;
@@ -165,11 +165,16 @@ public class ClassGroup implements Entity {
         return toUnmark.unmarkAttendance(students);
     }
 
+    //@@author jxt00
     /**
      * Finds the lesson in the lesson list by the provided weekIndex.
+     * weekIndex will always be correct.
      */
     private Lesson findLessonByIndex(Index weekIndex) {
-        return lessons.get(weekIndex.getZeroBased());
+        return lessons.stream()
+                .filter(lesson -> lesson.getWeekId().value.equals(weekIndex.getOneBased()))
+                .findFirst()
+                .orElseThrow(() -> new LessonNotFoundException());
     }
 
     public List<Lesson> getLessons() {

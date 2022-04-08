@@ -318,11 +318,11 @@ The following activity diagram summarizes what happens when a user executes a li
 
 ![ListActivityDiagram](images/ListActivityDiagram.png)
 
-### \[Proposed\] Enrol Feature
+### Enrol Feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed enrol mechanism is facilitated by `TAssist`. Its functionality, usage and behaviour is only for student entity. Additionally, it implements the following operations:
+The enrol mechanism is facilitated by `TAssist`. Its functionality, usage and behaviour is only for student entity. Additionally, it implements the following operations:
 
 * `EnrolCommandParser#parse()` — Parses the command arguments.
 * `EnrolCommand#execute()` — Executes `ModelManager#enrolStudent()` with given student(s) and class group.
@@ -347,11 +347,11 @@ Step 2. The user executes `enrol` command to enrol student(s) to a `ClassGroup`.
 <br> 2. If a command fails its execution, it will not call `EnrolCommand#execute()`, instead a `CommandException` will be thrown and no student(s) will be enrolled to the given class group.
 </div>
 
-### \[Proposed\] Grading Assessment Feature
+### Grading Assessment Feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed grading assessment mechanism is facilitated by `TAssist`. Since there are various gradable components, a new entity `Assessment` will benefit the application. This entity will allow tutors to customize what are the different gradable components, from assignments to class participations. Tutors can add, delete and list this entity like the other entities. On top of that, they will be able to grade the assessment, using the `grade` command. The following operations will be implemented for the `grade` command:
+The grading assessment mechanism is facilitated by `TAssist`. Since there are various gradable components, a new entity `Assessment` will benefit the application. This entity will allow tutors to customize what are the different gradable components, from assignments to class participations. Tutors can add, delete and list this entity like the other entities. On top of that, they will be able to grade the assessment, using the `grade` command. The following operations will be implemented for the `grade` command:
 
 * `GradeCommandParser#parse()` — Parses the command arguments.
 * `GradeCommand#execute()` — Executes `ModelManager#gradeAssessment()` with the specified assessment, students and the grade they get.
@@ -401,11 +401,11 @@ The following activity diagram summarizes what happens when a user executes a gr
     * Pros: All module related data are in one class.
     * Cons: Duplicate data in storage, hard to display assessments attempts.
 
-### \[Proposed\] Mark/Unmark feature
+### Mark/Unmark feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed mark/unmark mechanism is facilitated by `TAssist`. Its functionality, usage and behaviour is currently exclusive to `StudentAttendance`. Additionally, it implements the following operations:
+The mark/unmark mechanism is facilitated by `TAssist`. Its functionality, usage and behaviour is currently exclusive to `StudentAttendance`. Additionally, it implements the following operations:
 
 * `MarkCommandParser#parse()` — Parses the command arguments.
 * `MarkCommand#execute()` — Executes `ModelManager#markAttendance()` or `ModelManager#unmarkAttendance` based on a specified class group index and week number.
@@ -503,9 +503,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
                 <p class="c8"><span class="c0">[EPIC] Manage my students in my contacts</span></p>
                 <p class="c8 c6"><span class="c0"></span></p>
                 <ol class="c10 lst-kix_ti3wjakiwqoc-0 start" start="1">
-                    <li class="c7 li-bullet-0"><span class="c0">Add students to my contacts</span></li>
-                    <li class="c7 li-bullet-0"><span class="c0">Remove students from my contacts</span></li>
-                    <li class="c7 li-bullet-0"><span class="c0">View students</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">add students to my contacts</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove students from my contacts</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view students</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">find students by name</span></li>
                 </ol>
             </td>
             <td class="c13" colspan="1" rowspan="1">
@@ -576,6 +577,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
                 <p class="c8"><span class="c0">TA</span></p>
             </td>
             <td class="c3" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">[EPIC] Manage the assessments I assign</span></p>
+                <ol class="c10 lst-kix_pn5b7fzij174-0 start" start="1">
+                    <li class="c7 li-bullet-0"><span class="c0">add assessments </span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove assessments </span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view assessments </span></li>
+                </ol>
+            </td>
+            <td class="c13" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">monitor the assessments I assign.</span></p>
+            </td>
+            <td class="c12" colspan="1" rowspan="1">
+                <p class="c8 c6"><span class="c0"></span></p>
+            </td>
+            <td class="c1" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">***</span></p>
+            </td>
+        </tr>
+        <tr class="c11">
+            <td class="c16" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">5</span></p>
+            </td>
+            <td class="c9" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">TA</span></p>
+            </td>
+            <td class="c3" colspan="1" rowspan="1">
                 <p class="c8"><span class="c0">[EPIC] Manage students in the modules I am teaching</span></p>
                 <ol class="c10 lst-kix_l5c5afd4kfve-0 start" start="1">
                     <li class="c7 li-bullet-0"><span class="c0">add students to a module</span></li>
@@ -595,16 +621,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         </tr>
         <tr class="c11">
             <td class="c16" colspan="1" rowspan="1">
-                <p class="c8"><span class="c0">5</span></p>
+                <p class="c8"><span class="c0">6</span></p>
             </td>
             <td class="c9" colspan="1" rowspan="1">
                 <p class="c8"><span class="c0">TA</span></p>
             </td>
             <td class="c3" colspan="1" rowspan="1">
-                <p class="c8"><span class="c0">Add class groups to a module</span></p>
+                <p class="c8"><span class="c0">[EPIC] Manage students in the class groups I am teaching</span></p>
+                <ol class="c10 lst-kix_l5c5afd4kfve-0 start" start="1">
+                    <li class="c7 li-bullet-0"><span class="c0">add students to a class group</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove students from a class group</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view students in a class group</span></li>
+                </ol>
             </td>
             <td class="c13" colspan="1" rowspan="1">
-                <p class="c8"><span class="c0">track which module a class groups belongs to.</span></p>
+                <p class="c8"><span class="c0">easily monitor the students I am teaching in a class group.</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
                 <p class="c8 c6"><span class="c0"></span></p>
@@ -615,23 +646,101 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         </tr>
         <tr class="c11">
             <td class="c16" colspan="1" rowspan="1">
-                <p class="c8"><span class="c0">6</span></p>
+                <p class="c8"><span class="c0">7</span></p>
             </td>
             <td class="c9" colspan="1" rowspan="1">
                 <p class="c8"><span class="c0">TA</span></p>
             </td>
             <td class="c3" colspan="1" rowspan="1">
-                <p class="c8"><span class="c0">keep track of students’ attendance</span></p>
+                <p class="c8"><span class="c0">[EPIC] Manage class groups in the modules I am teaching</span></p>
+                <ol class="c10 lst-kix_l5c5afd4kfve-0 start" start="1">
+                    <li class="c7 li-bullet-0"><span class="c0">add class groups to a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove class groups from a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view class groups in a module</span></li>
+                </ol>
+            </td>
+            <td class="c13" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">easily monitor the class groups I am teaching in a module.</span></p>
+            </td>
+            <td class="c12" colspan="1" rowspan="1">
+                <p class="c8 c6"><span class="c0"></span></p>
+            </td>
+            <td class="c1" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">***</span></p>
+            </td>
+        </tr>
+        <tr class="c11">
+            <td class="c16" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">8</span></p>
+            </td>
+            <td class="c9" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">TA</span></p>
+            </td>
+            <td class="c3" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">[EPIC] Manage assessments in the modules I am teaching</span></p>
+                <ol class="c10 lst-kix_l5c5afd4kfve-0 start" start="1">
+                    <li class="c7 li-bullet-0"><span class="c0">add assessments to a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove assessments from a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view assessments in a module</span></li>
+                </ol>
+            </td>
+            <td class="c13" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">easily monitor the assessments I am assigning in a module.</span></p>
+            </td>
+            <td class="c12" colspan="1" rowspan="1">
+                <p class="c8 c6"><span class="c0"></span></p>
+            </td>
+            <td class="c1" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">***</span></p>
+            </td>
+        </tr>
+        <tr class="c11">
+            <td class="c16" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">9</span></p>
+            </td>
+            <td class="c9" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">TA</span></p>
+            </td>
+            <td class="c3" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">Keep track of students’ attendance</span></p>
                 <p class="c8"><span class="c0">Conditions:</span></p>
                 <ol class="c10 lst-kix_8pu3ok8lb4xj-0 start" start="1">
-                    <li class="c7 li-bullet-0"><span class="c0">add student to a lesson</span></li>
-                    <li class="c7 li-bullet-0"><span class="c0">remove student from a lesson </span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">add students to a lesson</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove students from a lesson </span></li>
                     <li class="c7 li-bullet-0"><span class="c0">view students in a lesson</span></li>
-                    <li class="c7 li-bullet-0"><span class="c0">Total attendance count</span></li>
                 </ol>
             </td>
             <td class="c13" colspan="1" rowspan="1">
                 <p class="c8"><span class="c0">focus on students who have not been attending lessons.</span></p>
+            </td>
+            <td class="c12" colspan="1" rowspan="1">
+                <p class="c8 c6"><span class="c0"></span></p>
+            </td>
+            <td class="c1" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">***</span></p>
+            </td>
+        </tr>
+        <tr class="c11">
+            <td class="c16" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">10</span></p>
+            </td>
+            <td class="c9" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">TA</span></p>
+            </td>
+            <td class="c3" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">Keep track of students’ assessment attempts</span></p>
+                <p class="c8"><span class="c0">Conditions:</span></p>
+                <ol class="c10 lst-kix_8pu3ok8lb4xj-0 start" start="1">
+                    <li class="c7 li-bullet-0"><span class="c0">add students to a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove students from a module </span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view students in a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">add assessments to a module</span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">remove assessments from a module </span></li>
+                    <li class="c7 li-bullet-0"><span class="c0">view assessments in a module</span></li>
+                </ol>
+            </td>
+            <td class="c13" colspan="1" rowspan="1">
+                <p class="c8"><span class="c0">grade students' assessment attempts.</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
                 <p class="c8 c6"><span class="c0"></span></p>
@@ -660,15 +769,202 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. TAssist detects an error in the entered command.
 
-    * 1a1. TAssist prompts for the correct command.
+  * 1a1. TAssist prompts for the correct command.
 
-    * 1a2. TA enters a new command.
+  * 1a2. TA enters a new command.
 
-      Steps 1a1-1a2 are repeated until the command entered is correct.
+    Steps 1a1-1a2 are repeated until the command entered is correct.
 
-      Use case resumes from step 2.
+    Use case resumes from step 2.
 
-**Use case 02: List modules**
+**Use case 02: Add a student**
+
+**MSS**
+
+1.  TA requests to add a new student with the specified details.
+2.  TAssist adds the new student and displays their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 03: Add a class group**
+
+**Preconditions: The module that the class group will be added to already exists.**
+
+**MSS**
+
+1. TA requests to <ins>list modules (UC10)</ins>.
+2. TA requests to add a new class group with the specified details.
+3. TAssist adds the new class group and displays its details.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. TAssist detects an error in the entered command.
+
+  * 2a1. TAssist prompts for the correct command.
+
+  * 2a2. TA enters a new command.
+
+    Steps 2a1-2a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 3.
+
+**Use case 04: Add an assessment**
+
+**Preconditions: The module that the assessment will be added to already exists.**
+
+**MSS**
+
+1. TA requests to <ins>list modules (UC10)</ins>.
+2. TA requests to add a new assessment with the specified details.
+3. TAssist adds the new assessment and displays its details.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. TAssist detects an error in the entered command.
+
+  * 2a1. TAssist prompts for the correct command.
+
+  * 2a2. TA enters a new command.
+
+    Steps 2a1-2a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 3.
+
+**Use case 05: Enrolling student(s)**
+
+**Preconditions:**
+
+1.  The student(s) to be enrolled already exist.
+2.  The class group that the student(s) will be enrolled in already exists.
+
+**MSS**
+
+1.  TA requests to enrol one/more student(s) into a particular class group.
+2.  TAssist enrols the student(s) and displays their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 06: Disenrolling student(s)**
+
+**Preconditions: The student(s) to be disenrolled is already enrolled in the class group.**
+
+**MSS**
+
+1.  TA requests to disenrol one/more student(s) from a particular class group.
+2.  TAssist disenrols the student(s) and displays their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 07: Marking students' attendances**
+
+**Preconditions: The student(s) whose attendance(s) is to be marked is already enrolled in the class group.**
+
+**MSS**
+
+1.  TA requests to mark one/more student(s) attendance(s) from a particular class group.
+2.  TAssist marks the attendance(s) and displays their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 08: Unmarking students' attendances**
+
+**Preconditions: The student(s) whose attendance(s) is to be unmarked is already enrolled in the class group.**
+
+**MSS**
+
+1.  TA requests to unmark one/more student(s) attendance(s) from a particular class group.
+2.  TAssist unmarks the attendance(s) and displays their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 09: Grading assessments**
+
+**Preconditions: The student(s) are already enrolled in the module that the assesssment is associated with.**
+
+**MSS**
+
+1.  TA requests to grade one/more student(s) assessment(s) from a particular module.
+2.  TAssist grade the assessment(s) and displays their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 10: List modules**
 
 **MSS**
 
@@ -681,21 +977,159 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. TAssist detects an error in the entered command.
 
-    * 1a1. TAssist prompts for the correct command.
+  * 1a1. TAssist prompts for the correct command.
 
-    * 1a2. TA enters a new command.
+  * 1a2. TA enters a new command.
 
-      Steps 1a1-1a2 are repeated until the command entered is correct.
+    Steps 1a1-1a2 are repeated until the command entered is correct.
 
-      Use case resumes from step 2.
+    Use case resumes from step 2.
 
-**Use case 03: Delete a module**
+**Use case 11: List/filter students**
 
 **MSS**
 
-1. TA requests to <ins>list modules (UC02)</ins>.
+1.  TA requests to list students.
+2.  TAssist displays the details of all students.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TA requests to filter students by a specific module.
+
+  * 1a1. TAssist displays the details of students belonging to the specified module.
+
+    Use case ends.
+
+* 1a. TA requests to filter students by a specific class group.
+
+  * 1a1. TAssist displays the details of students belonging to the specified class group.
+
+    Use case ends.
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 12: List/filter class groups**
+
+**MSS**
+
+1.  TA requests to list class groups.
+2.  TAssist displays the details of all class groups.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TA requests to filter class groups by a specific module.
+
+  * 1a1. TAssist displays the details of class groups belonging to the specified module.
+
+    Use case ends.
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 13: List/filter assessments**
+
+**MSS**
+
+1.  TA requests to list assessments.
+2.  TAssist displays the details of all assessments.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TA requests to filter assessments by a specific module.
+
+  * 1a1. TAssist displays the details of assessments belonging to the specified module.
+
+    Use case ends.
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+**Use case 14: Find students by name**
+
+**MSS**
+
+1.  TA requests to find students with specific keyword(s).
+2.  TAssist displays the details of all students whose name contains one/more of the specified keyword(s).
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. TAssist detects an error in the entered command.
+
+  * 1a1. TAssist prompts for the correct command.
+
+  * 1a2. TA enters a new command.
+
+    Steps 1a1-1a2 are repeated until the command entered is correct.
+
+    Use case resumes from step 2.
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+**Use case 15: Delete a module**
+
+**MSS**
+
+1. TA requests to <ins>list modules (UC10)</ins>.
 2. TA requests to delete a specific module in the list.
-3. TAssist deletes the module and the class groups associated with it.
+3. TAssist deletes the module and the class groups and assessments associated with it.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 2b. TAssist detects an error in the entered command.
+
+  * 2b1. TAssist prompts for the correct command.
+
+  * 2b2. TA enters a new command.
+
+    Steps 2b1-2b2 are repeated until the command entered is correct.
+
+    Use case resumes from step 3.
+
+**Use case 16: Delete a student**
+
+**MSS**
+
+1.  TA requests to <ins>list students (UC11)</ins>.
+2.  TA requests to delete a specific student in the list.
+3.  TAssist deletes the student and their associated assessment attempts.
 
     Use case ends.
 
@@ -707,64 +1141,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. TAssist detects an error in the entered command.
 
-    * 2b1. TAssist prompts for the correct command.
+  * 2b1. TAssist prompts for the correct command.
 
-    * 2b2. TA enters a new command.
+  * 2b2. TA enters a new command.
 
-      Steps 2b1-2b2 are repeated until the command entered is correct.
+    Steps 2b1-2b2 are repeated until the command entered is correct.
 
-      Use case resumes from step 3.
+    Use case resumes from step 3.
 
-**Use case 04: Add a class group**
-
-**Preconditions: The module that the class group will be added to already exists.**
+**Use case 17: Delete a class group**
 
 **MSS**
 
-1. TA requests to <ins>list modules (UC02)</ins>.
-2. TA requests to add a new class group with the specified details.
-3. TAssist adds the new class group and displays its details.
-
-    Use case ends.
-
-**Extensions**
-
-* 2a. TAssist detects an error in the entered command.
-
-    * 2a1. TAssist prompts for the correct command.
-
-    * 2a2. TA enters a new command.
-
-      Steps 1a1-1a2 are repeated until the command entered is correct.
-
-      Use case resumes from step 2.
-
-**Use case 05: List class groups**
-
-**MSS**
-
-1.  TA requests to list class groups.
-2.  TAssist displays the details of all class groups.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. TAssist detects an error in the entered command.
-
-    * 1a1. TAssist prompts for the correct command.
-
-    * 1a2. TA enters a new command.
-
-      Steps 1a1-1a2 are repeated until the command entered is correct.
-
-      Use case resumes from step 2.
-
-**Use case 06: Delete a class group**
-
-**MSS**
-
-1.  TA requests to <ins>list class groups (UC05)</ins>.
+1.  TA requests to <ins>list class groups (UC12)</ins>.
 2.  TA requests to delete a specific class group in the list.
 3.  TAssist deletes the class group.
 
@@ -778,63 +1167,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. TAssist detects an error in the entered command.
 
-    * 2b1. TAssist prompts for the correct command.
+  * 2b1. TAssist prompts for the correct command.
 
-    * 2b2. TA enters a new command.
+  * 2b2. TA enters a new command.
 
-      Steps 2b1-2b2 are repeated until the command entered is correct.
+    Steps 2b1-2b2 are repeated until the command entered is correct.
 
-      Use case resumes from step 3.
+    Use case resumes from step 3.
 
-**Use case 07: Add a student**
-
-**MSS**
-
-1.  TA requests to add a new student with the specified details.
-2.  TAssist adds the new student and displays their details.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. TAssist detects an error in the entered command.
-
-    * 1a1. TAssist prompts for the correct command.
-
-    * 1a2. TA enters a new command.
-
-      Steps 1a1-1a2 are repeated until the command entered is correct.
-
-      Use case resumes from step 2.
-
-**Use case 08: List students**
+**Use case 18: Delete an assessment**
 
 **MSS**
 
-1.  TA requests to list students.
-2.  TAssist displays the details of all students.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. TAssist detects an error in the entered command.
-
-    * 1a1. TAssist prompts for the correct command.
-
-    * 1a2. TA enters a new command.
-
-      Steps 1a1-1a2 are repeated until the command entered is correct.
-
-      Use case resumes from step 2.
-
-**Use case 09: Delete a student**
-
-**MSS**
-
-1.  TA requests to <ins>list students (UC08)</ins>.
-2.  TA requests to delete a specific student in the list.
-3.  TAssist deletes the student.
+1.  TA requests to <ins>list assessments (UC13)</ins>.
+2.  TA requests to delete a specific assessment in the list.
+3.  TAssist deletes the assessment.
 
     Use case ends.
 
@@ -846,13 +1193,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. TAssist detects an error in the entered command.
 
-    * 2b1. TAssist prompts for the correct command.
+  * 2b1. TAssist prompts for the correct command.
 
-    * 2b2. TA enters a new command.
+  * 2b2. TA enters a new command.
 
-      Steps 2b1-2b2 are repeated until the command entered is correct.
+    Steps 2b1-2b2 are repeated until the command entered is correct.
 
-      Use case resumes from step 3.
+    Use case resumes from step 3.
 
 ### Non-Functional Requirements
 

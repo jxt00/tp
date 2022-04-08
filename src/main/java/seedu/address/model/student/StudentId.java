@@ -30,14 +30,14 @@ public class StudentId {
     public StudentId(String studentId) {
         requireNonNull(studentId);
         checkArgument(isValidStudentId(studentId), MESSAGE_CONSTRAINTS);
-        value = studentId;
+        value = studentId.toUpperCase();
     }
 
     /**
      * Returns true if a given string is a valid student ID.
      */
     public static boolean isValidStudentId(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.toUpperCase().matches(VALIDATION_REGEX);
     }
 
     @Override

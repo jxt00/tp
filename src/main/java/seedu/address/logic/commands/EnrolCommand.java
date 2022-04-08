@@ -20,15 +20,17 @@ import seedu.address.model.tamodule.TaModule;
  */
 public class EnrolCommand extends Command {
 
-    public static final String STUDENT_EXISTS_CG = "Student(s) exist in class group:\n%s";
-    public static final String NONEXISTENT_CG = "Class Group %d does not exists.";
-    public static final String MESSAGE_ENROL_OTHERS = "Successfully enrolled the other student(s) into %s(%s).";
-    public static final String MESSAGE_ENROL_SUCCESS = "Successfully enrolled given student(s) into %s(%s).";
+    public static final String STUDENT_EXISTS_CG = "Command failed for student(s)"
+            + " who already exist in given class group:\n%s";
+    public static final String NONEXISTENT_CG = "Class Group index %d does not exists\n\n%s";
+    public static final String MESSAGE_ENROL_SOME = "Successfully enrolled some student(s) into %s(%s)\n";
+    public static final String MESSAGE_ENROL_SUCCESS = "Successfully enrolled all given student(s) into %s(%s)";
+    public static final String MESSAGE_ENROL_FAILURE = "No given student(s) were successfully enrolled into %s(%s)\n";
     public static final String COMMAND_WORD = "enrol";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Enrols the specified students to "
             + "the given class group.\n"
             + "\tParameters: " + PREFIX_CLASS_INDEX + "CLASS_GROUP_INDEX "
-            + PREFIX_STUDENT + "all|STUDENT_INDEXES|STUDENT_IDS "
+            + PREFIX_STUDENT + "all | STUDENT_INDEXES | STUDENT_IDS "
             + "\n\tExamples: "
             + "\n\t\t1. " + COMMAND_WORD + " "
             + PREFIX_CLASS_INDEX + "1 "
@@ -57,10 +59,11 @@ public class EnrolCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         String result = "";
+        String fail = "";
         List<ClassGroup> cgList = model.getUnfilteredClassGroupList();
 
         if (classGroupIndex.getZeroBased() >= cgList.size()) {
-            throw new CommandException(String.format(NONEXISTENT_CG, classGroupIndex.getOneBased()));
+            throw new CommandException(String.format(NONEXISTENT_CG, classGroupIndex.getOneBased(), MESSAGE_USAGE));
         }
 
         ClassGroup cgToEdit = cgList.get(classGroupIndex.getZeroBased());
@@ -86,9 +89,13 @@ public class EnrolCommand extends Command {
         } else {
             result = String.format(STUDENT_EXISTS_CG, result);
             if (notEnrolled != students.size()) {
-                result += String.format(MESSAGE_ENROL_OTHERS,
+                fail = String.format(MESSAGE_ENROL_SOME,
+                        newCg.getClassGroupId(), newCg.getClassGroupType());
+            } else if (notEnrolled == students.size()) {
+                fail = String.format(MESSAGE_ENROL_FAILURE,
                         newCg.getClassGroupId(), newCg.getClassGroupType());
             }
+            result = fail + result;
         }
 
         model.setEntity(cgToEdit, newCg);

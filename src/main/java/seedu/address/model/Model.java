@@ -110,6 +110,9 @@ public interface Model {
     /** Returns the updated module in tassist. */
     TaModule getModule(TaModule module);
 
+    /** Returns true if a student with the same studentId exists in tassist. */
+    boolean hasStudent(StudentId studentId);
+
     /** Removes all instances of student from the assessment list. */
     void removeStudentFromAssessments(Student student);
 

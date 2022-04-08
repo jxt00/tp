@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_ERROR_MESSAGE_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_CLASS_GROUP_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TA_MODULE_DISPLAYED_INDEX;
@@ -83,8 +84,8 @@ public class ListCommandParser implements Parser<ListCommand> {
             }
             return new ListCommand(parsedEntityType, filteredEntity, optionalIndex);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_ERROR_MESSAGE_FORMAT, pe.getMessage(),
+                    ListCommand.MESSAGE_USAGE), pe);
         }
     }
 

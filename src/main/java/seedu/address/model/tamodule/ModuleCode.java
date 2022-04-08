@@ -16,7 +16,7 @@ public class ModuleCode {
     /*
      * The first character of the module code must begin with a letter.
      */
-    public static final String VALIDATION_REGEX = "^[\\p{Upper}]{2,4}[\\p{Digit}]{4}\\p{Upper}*$";
+    public static final String VALIDATION_REGEX = "^[\\p{Upper}]{2,4}[\\p{Digit}]{4}\\p{Alnum}*$";
 
     public final String value;
 

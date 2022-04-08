@@ -128,7 +128,7 @@ public class Assessment implements Entity {
     }
 
     /**
-     * Returns true if both assessments have the same assessmentName and module.
+     * Returns true if both assessments have the same (assessmentName and module) or (same simpleName and module).
      * This defines a weaker notion of equality between two assessments.
      */
     public boolean isSameAssessment(Assessment otherAssessment) {
@@ -137,8 +137,10 @@ public class Assessment implements Entity {
         }
 
         return otherAssessment != null
-                && otherAssessment.getAssessmentName().equals(getAssessmentName())
-                && otherAssessment.getModule().isSameModule(getModule());
+                && (otherAssessment.getAssessmentName().equals(getAssessmentName())
+                && otherAssessment.getModule().isSameModule(getModule()))
+                || (otherAssessment.getSimpleName().equals(getSimpleName())
+                && otherAssessment.getModule().isSameModule(getModule()));
     }
 
     @Override

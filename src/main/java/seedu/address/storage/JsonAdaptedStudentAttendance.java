@@ -48,6 +48,10 @@ class JsonAdaptedStudentAttendance {
         final Student modelStudent = StorageUtil.getStudentByStudentId(studentList, studentId,
                 MISSING_FIELD_MESSAGE_FORMAT);
 
+        if (isPresent == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Attendance.class.getSimpleName()));
+        }
         if (!Attendance.isValidAttendance(isPresent)) {
             throw new IllegalValueException(Attendance.MESSAGE_CONSTRAINTS);
         }

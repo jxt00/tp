@@ -11,6 +11,8 @@ public enum ClassGroupType {
     SECTIONAL("Sectional"),
     TUTORIAL("Tutorial");
 
+    public static final String MESSAGE_CONSTRAINTS =
+            "Class type should only be Lab, Recitation, Sectional or Tutorial.";
     private final String value;
 
     ClassGroupType(String classGroupType) {

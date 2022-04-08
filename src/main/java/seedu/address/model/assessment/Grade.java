@@ -61,7 +61,7 @@ public class Grade {
      * Returns a new grade with value increased by 1.
      */
     public Grade increment() {
-        return new Grade(this.value + 1);
+        return new Grade(Math.addExact(this.value, 1));
     }
 
     @Override

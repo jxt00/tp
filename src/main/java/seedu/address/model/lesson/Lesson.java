@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import seedu.address.model.student.Student;
 import seedu.address.model.studentattendance.Attendance;
@@ -50,6 +51,12 @@ public class Lesson {
 
     public List<StudentAttendance> getStudentAttendanceList() {
         return studentAttendanceList;
+    }
+
+    public List<Student> getStudents() {
+        return studentAttendanceList.stream()
+                .map(entry -> entry.getStudent())
+                .collect(Collectors.toList());
     }
 
     public void addStudent(Student student) {

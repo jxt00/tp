@@ -10,13 +10,16 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class ModuleName {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should not be blank";
 
-    /*
+    /**
      * The first character of the Module Name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
+     * A more specific VALIDATION_REGEX that works for all modules in AY 21/22 would be
+     * "[\\p{L}\\p{Digit}'#“][\\p{L}\\p{Digit}‐\\-,:&.()'–\n/“”+?’!‘# ]*";
+     * However, using a more general regex as newer module with other special characters maybe added.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[^ ].*[\n]?.*";
 
     public final String value;
 
