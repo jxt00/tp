@@ -20,6 +20,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.classgroup.ClassGroup;
 import seedu.address.model.entity.EntityType;
 import seedu.address.model.entity.exceptions.UnknownEntityException;
+import seedu.address.model.student.Student;
 import seedu.address.model.tamodule.TaModule;
 
 //@@author jxt00
@@ -30,19 +31,18 @@ import seedu.address.model.tamodule.TaModule;
 public class DeleteCommandTest {
     private Model model = new ModelManager(getTypicalTAssist(), new UserPrefs());
 
-    // fails occasionally
-    //    @Test
-    //    public void execute_validStudentIndexUnfilteredList_success() {
-    //        Student studentToDelete = model.getUnfilteredStudentList().get(INDEX_FIRST_ENTITY.getZeroBased());
-    //        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ENTITY, EntityType.STUDENT);
-    //
-    //        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ENTITY_SUCCESS, studentToDelete);
-    //
-    //        ModelManager expectedModel = new ModelManager(model.getTAssist(), new UserPrefs());
-    //        expectedModel.deleteEntity(studentToDelete);
-    //
-    //        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel, EntityType.STUDENT);
-    //    }
+    @Test
+    public void execute_validStudentIndexUnfilteredList_success() {
+        Student studentToDelete = model.getUnfilteredStudentList().get(INDEX_FIRST_ENTITY.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ENTITY, EntityType.STUDENT);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ENTITY_SUCCESS, studentToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getTAssist(), new UserPrefs());
+        expectedModel.deleteEntity(studentToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel, EntityType.STUDENT);
+    }
 
     @Test
     public void execute_validModuleIndexUnfilteredList_success() {
@@ -121,22 +121,21 @@ public class DeleteCommandTest {
     //    }
 
     // No module will be deleted from a filtered list.
-    // fails on Github
-    //    @Test
-    //    public void execute_validStudentIndexFilteredList_success() {
-    //        showEntityAtIndex(model, INDEX_FIRST_ENTITY, EntityType.STUDENT);
-    //
-    //        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_ENTITY.getZeroBased());
-    //        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ENTITY, EntityType.STUDENT);
-    //
-    //        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ENTITY_SUCCESS, studentToDelete);
-    //
-    //        Model expectedModel = new ModelManager(model.getTAssist(), new UserPrefs());
-    //        expectedModel.deleteEntity(studentToDelete);
-    //        showNoEntity(expectedModel, EntityType.STUDENT);
-    //
-    //        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel, EntityType.STUDENT);
-    //    }
+    @Test
+    public void execute_validStudentIndexFilteredList_success() {
+        showEntityAtIndex(model, INDEX_FIRST_ENTITY, EntityType.STUDENT);
+
+        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_ENTITY.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ENTITY, EntityType.STUDENT);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ENTITY_SUCCESS, studentToDelete);
+
+        Model expectedModel = new ModelManager(model.getTAssist(), new UserPrefs());
+        expectedModel.deleteEntity(studentToDelete);
+        showNoEntity(expectedModel, EntityType.STUDENT);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel, EntityType.STUDENT);
+    }
 
     @Test
     public void execute_validClassGroupIndexFilteredList_success() {
