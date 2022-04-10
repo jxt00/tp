@@ -58,7 +58,7 @@ class JsonAdaptedStudent {
                     StudentId.class.getSimpleName()));
         }
         if (!StudentId.isValidStudentId(studentId)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(StudentId.MESSAGE_CONSTRAINTS);
         }
         final StudentId modelStudentId = new StudentId(studentId);
 

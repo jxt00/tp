@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.TYPE_CLASS;
 import static seedu.address.logic.parser.CliSyntax.TYPE_MODULE;
 import static seedu.address.logic.parser.CliSyntax.TYPE_STUDENT;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.entity.Entity;
@@ -74,7 +75,6 @@ public class AddCommand extends Command {
             + PREFIX_SIMPLE_NAME + "part ";
 
     public static final String MESSAGE_SUCCESS = "New entity added: %1$s";
-    public static final String MESSAGE_DUPLICATE_ENTITY = "This entity already exists in TAssist";
 
     private final Entity toAdd;
 
@@ -91,7 +91,18 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasEntity(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_ENTITY); // TODO: Update Command Exception
+            switch (toAdd.getEntityType()) {
+            case STUDENT:
+                throw new CommandException(Messages.MESSAGE_DUPLICATE_STUDENT);
+            case TA_MODULE:
+                throw new CommandException(Messages.MESSAGE_DUPLICATE_MODULE);
+            case CLASS_GROUP:
+                throw new CommandException(Messages.MESSAGE_DUPLICATE_CLASS_GROUP);
+            case ASSESSMENT:
+                throw new CommandException(Messages.MESSAGE_DUPLICATE_ASSESSMENT);
+            default:
+                throw new CommandException(Messages.MESSAGE_UNKNOWN_ENTITY);
+            }
         }
 
         model.addEntity(toAdd);

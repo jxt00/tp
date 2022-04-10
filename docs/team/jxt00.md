@@ -5,11 +5,11 @@ title: Jia Xin's Project Portfolio Page
 
 ### Project: TAssist
 
-**TAssist** is a desktop app for Teaching Assistants to manage their students across different modules and keep track of students’ activities/participation in class. It is optimized for use via Command Line Interface (CLI). The user interacts with it using a CLI, and it has a GUI (Graphical User Interface) created with JavaFX. It is written in Java, and has about 11 kLoC.
+**TAssist** is a desktop app for Teaching Assistants to manage their students across different modules and keep track of students’ activities/participation in class. It is optimized for use via Command Line Interface (CLI). The user interacts with it using a CLI, and it has a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 11 kLoC.
 
 Given below are my contributions to the project.
 
-* **New Feature**: Added the ability to manage class groups, lessons and student attendances.
+* **New Feature**: Added the model for class groups, lessons and student attendances.
   * What it does: Allows the TA to manage the class groups, lessons as well as the students enrolled in the class groups.
   * Justification: This feature improves the product significantly because a TA needs to manage the class groups he/she is teaching as well as the weekly lessons and student attendances and the app should provide a convenient way to represent them.
   * Highlights: This enhancement required an in-depth analysis of design alternatives. The implementation too was challenging as changes were made to accomodate the model classes and methods needed for each version iteration (e.g. added `Lesson` and `StudentAttendance` in v1.3).
@@ -25,8 +25,8 @@ Given below are my contributions to the project.
   * Highlights: This enhancement affects v1.3 commands (e.g. `mark`, `unmark`). It required an in-depth analysis of design alternatives. The implementation too was challenging as various inputs need to be handled with the appropriate error messages.
 
 * **New Feature**:
-  * Wrote tests for the `ClassGroup`, `Lesson` and `StudentAttendance` components.
-  * Wrote tests for `JsonAdaptedClassGroup` as well as the `DeleteCommand` and `DeleteCommandParser`.
+  * Wrote tests for the `ClassGroup`, `Lesson` and `StudentAttendance` components as well as their relative storage classes `JsonAdaptedClassGroup`, `JsonAdaptedLesson` and `JsonAdaptedStudentAttendance`.
+  * Wrote tests for the `DeleteCommand` and `DeleteCommandParser`.
 
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2122s2.github.io/tp-dashboard/?search=jxt00&breakdown=true)
 
